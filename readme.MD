@@ -11,7 +11,7 @@ Este proyecto está construido en **NestJS** bajo una arquitectura de **microser
 | Servicio               | Descripción                                          |
 |:----------------------|:-----------------------------------------------------|
 | **api-gateway**         | Punto único de entrada. Valida tokens y enruta peticiones a los microservicios. |
-| **auth-service**        | Maneja registro, login, y emisión de tokens JWT.     |
+| **user-service**        | Maneja registro, login, y emisión de tokens JWT.     |
 | **animal-service**      | Permite a los refugios gestionar animales disponibles para adopción. |
 | **appointment-service** | Administra los turnos de reunión entre adoptantes y refugios. |
 | **adoption-service**    | Gestiona las solicitudes de adopción de los usuarios. |
