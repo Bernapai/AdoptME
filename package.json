@@ -6,6 +6,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@nestjs/mapped-types": "^2.1.0",
     "@nestjs/typeorm": "^11.0.0",
     "class-validator": "^0.14.1",
     "pg": "^8.14.1",
