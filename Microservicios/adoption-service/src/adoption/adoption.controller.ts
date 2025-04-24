@@ -21,6 +21,7 @@ export class AdoptionController {
   ): Promise<Adopcion> {
     return this.adoptionService.create(createAdopcionDto);
   }
+
   @Get()
   async findAll(): Promise<Adopcion[]> {
     return this.adoptionService.findAll();
