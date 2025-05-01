@@ -1,47 +1,40 @@
-import {
-  Controller,
-  Get,
-  Put,
-  Delete,
-  Param,
-  Body,
-  Post,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { AdoptionService } from './adoption.service';
 import { CreateAdopcionDto } from './dto/createAdoption.dto';
 import { UpdateAdopcionDto } from './dto/updateAdoption.dto';
 import { Adopcion } from './adoption.entity';
-@Controller('adoption')
+
+@Controller()
 export class AdoptionController {
   constructor(private readonly adoptionService: AdoptionService) { }
 
-  @Post()
+  @MessagePattern({ cmd: 'create-adoption' })
   async create(
-    @Body() createAdopcionDto: CreateAdopcionDto,
+    @Payload() createAdopcionDto: CreateAdopcionDto,
   ): Promise<Adopcion> {
     return this.adoptionService.create(createAdopcionDto);
   }
 
-  @Get()
+  @MessagePattern({ cmd: 'get-adoptions' })
   async findAll(): Promise<Adopcion[]> {
     return this.adoptionService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Adopcion> {
-    return this.adoptionService.findOne(Number(id));
+  @MessagePattern({ cmd: 'get-adoption' })
+  async findOne(@Payload() id: number): Promise<Adopcion> {
+    return this.adoptionService.findOne(id);
   }
 
-  @Put(':id')
+  @MessagePattern({ cmd: 'update-adoption' })
   async update(
-    @Param('id') id: string,
-    @Body() updateAdopcionDto: UpdateAdopcionDto,
+    @Payload() payload: { id: number; dto: UpdateAdopcionDto },
   ): Promise<Adopcion> {
-    return this.adoptionService.update(Number(id), updateAdopcionDto);
+    return this.adoptionService.update(payload.id, payload.dto);
   }
 
-  @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
-    return this.adoptionService.remove(Number(id));
+  @MessagePattern({ cmd: 'delete-adoption' })
+  async remove(@Payload() id: number): Promise<void> {
+    return this.adoptionService.remove(id);
   }
 }

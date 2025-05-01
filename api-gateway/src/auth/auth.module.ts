@@ -20,7 +20,7 @@ import { User } from '../../../Microservicios/user-service/src/users/users.entit
     }),
     UsersModule,
     JwtModule.register({
-      secret: 'secreto',
+      secret: 'JksIJ093jJSo',
       signOptions: { expiresIn: '1h' },
     }),
   ],

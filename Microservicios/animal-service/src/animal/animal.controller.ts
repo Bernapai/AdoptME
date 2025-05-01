@@ -1,48 +1,40 @@
-import {
-  Controller,
-  Get,
-  Put,
-  Delete,
-  Param,
-  Body,
-  Post,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { AnimalService } from './animal.service';
 import { CreateAnimalDomesticoDto } from './dto/createAnimal.dto';
 import { UpdateAnimalDomesticoDto } from './dto/updateAnimal.dto';
 import { AnimalDomestico } from './animal.entity';
 
-@Controller('animal')
+@Controller()
 export class AnimalController {
   constructor(private readonly animalService: AnimalService) { }
 
-  @Post()
+  @MessagePattern({ cmd: 'create-animal' })
   async create(
-    @Body() createAnimalDomesticoDto: CreateAnimalDomesticoDto,
+    @Payload() createAnimalDomesticoDto: CreateAnimalDomesticoDto,
   ): Promise<AnimalDomestico> {
     return this.animalService.create(createAnimalDomesticoDto);
   }
 
-  @Get()
+  @MessagePattern({ cmd: 'get-animals' })
   async findAll(): Promise<AnimalDomestico[]> {
     return this.animalService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<AnimalDomestico> {
-    return this.animalService.findOne(Number(id));
+  @MessagePattern({ cmd: 'get-animal' })
+  async findOne(@Payload() id: number): Promise<AnimalDomestico> {
+    return this.animalService.findOne(id);
   }
 
-  @Put(':id')
+  @MessagePattern({ cmd: 'update-animal' })
   async update(
-    @Param('id') id: string,
-    @Body() updateAnimalDomesticoDto: UpdateAnimalDomesticoDto,
+    @Payload() payload: { id: number; dto: UpdateAnimalDomesticoDto },
   ): Promise<AnimalDomestico> {
-    return this.animalService.update(Number(id), updateAnimalDomesticoDto);
+    return this.animalService.update(payload.id, payload.dto);
   }
 
-  @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
-    return this.animalService.remove(Number(id));
+  @MessagePattern({ cmd: 'delete-animal' })
+  async remove(@Payload() id: number): Promise<void> {
+    return this.animalService.remove(id);
   }
 }

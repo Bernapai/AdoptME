@@ -1,46 +1,38 @@
-import {
-  Controller,
-  Get,
-  Put,
-  Delete,
-  Param,
-  Body,
-  Post,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { User } from './users.entity';
 
-@Controller('users')
+@Controller()
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
-  @Post()
-  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+  @MessagePattern({ cmd: 'create-user' })
+  async create(@Payload() createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
+  @MessagePattern({ cmd: 'get-users' })
   async findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<User> {
-    return this.usersService.findOne(Number(id));
+  @MessagePattern({ cmd: 'get-user' })
+  async findOne(@Payload() id: number): Promise<User> {
+    return this.usersService.findOne(id);
   }
 
-  @Put(':id')
+  @MessagePattern({ cmd: 'update-user' })
   async update(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
+    @Payload() payload: { id: number; dto: UpdateUserDto },
   ): Promise<User> {
-    return this.usersService.update(Number(id), updateUserDto);
+    return this.usersService.update(payload.id, payload.dto);
   }
 
-  @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
-    return this.usersService.remove(Number(id));
+  @MessagePattern({ cmd: 'delete-user' })
+  async remove(@Payload() id: number): Promise<void> {
+    return this.usersService.remove(id);
   }
 }

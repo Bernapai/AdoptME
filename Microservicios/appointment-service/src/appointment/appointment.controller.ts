@@ -1,48 +1,40 @@
-import {
-  Controller,
-  Get,
-  Put,
-  Delete,
-  Param,
-  Body,
-  Post,
-} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { AppointmentService } from './appointment.service';
 import { CreateAppointmentDto } from './dto/createAppointment.dto';
 import { UpdateAppointmentDto } from './dto/updateAppointment.dto';
 import { Appointment } from './appointment.entity';
 
-@Controller('appointment')
+@Controller()
 export class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService) { }
 
-  @Post()
+  @MessagePattern({ cmd: 'create-appointment' })
   async create(
-    @Body() createAppointmentDto: CreateAppointmentDto,
+    @Payload() createAppointmentDto: CreateAppointmentDto,
   ): Promise<Appointment> {
     return this.appointmentService.create(createAppointmentDto);
   }
 
-  @Get()
+  @MessagePattern({ cmd: 'get-appointments' })
   async findAll(): Promise<Appointment[]> {
     return this.appointmentService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Appointment> {
-    return this.appointmentService.findOne(Number(id));
+  @MessagePattern({ cmd: 'get-appointment' })
+  async findOne(@Payload() id: number): Promise<Appointment> {
+    return this.appointmentService.findOne(id);
   }
 
-  @Put(':id')
+  @MessagePattern({ cmd: 'update-appointment' })
   async update(
-    @Param('id') id: string,
-    @Body() updateAppointmentDto: UpdateAppointmentDto,
+    @Payload() payload: { id: number; dto: UpdateAppointmentDto },
   ): Promise<Appointment> {
-    return this.appointmentService.update(Number(id), updateAppointmentDto);
+    return this.appointmentService.update(payload.id, payload.dto);
   }
 
-  @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
-    return this.appointmentService.remove(Number(id));
+  @MessagePattern({ cmd: 'delete-appointment' })
+  async remove(@Payload() id: number): Promise<void> {
+    return this.appointmentService.remove(id);
   }
 }
