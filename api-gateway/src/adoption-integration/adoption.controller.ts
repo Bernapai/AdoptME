@@ -1,52 +1,46 @@
 import {
-  Body,
   Controller,
-  Delete,
   Get,
-  Param,
   Post,
   Put,
+  Delete,
+  Body,
+  Param,
 } from '@nestjs/common';
-import {
-  Client,
-  ClientProxy,
-  MessagePattern,
-  Payload,
-  Transport,
-} from '@nestjs/microservices';
+import { AdoptionService } from './adoption.service';
 import { CreateAdopcionDto } from '../../../Microservicios/adoption-service/src/adoption/dto/createAdoption.dto';
 import { UpdateAdopcionDto } from '../../../Microservicios/adoption-service/src/adoption/dto/updateAdoption.dto';
+import { Adopcion } from '../../../Microservicios/adoption-service/src/adoption/adoption.entity';
 
-@Controller('adoption')
+@Controller('adoptions')
 export class AdoptionController {
-  @Client({ transport: Transport.TCP })
-  private client: ClientProxy;
+  constructor(private readonly adoptionService: AdoptionService) { }
 
   @Post()
-  async create(@Body() createAdopcionDto: CreateAdopcionDto) {
-    return this.client.send({ cmd: 'create-adoption' }, createAdopcionDto);
+  async create(@Body() dto: CreateAdopcionDto): Promise<Adopcion> {
+    return this.adoptionService.create(dto);
   }
 
   @Get()
-  async findAll() {
-    return this.client.send({ cmd: 'get-adoptions' }, {});
+  async findAll(): Promise<Adopcion[]> {
+    return this.adoptionService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.client.send({ cmd: 'get-adoption' }, Number(id));
+  async findOne(@Param('id') id: string): Promise<Adopcion> {
+    return this.adoptionService.findOne(Number(id));
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() updateAdopcionDto: UpdateAdopcionDto) {
-    return this.client.send(
-      { cmd: 'update-adoption' },
-      { id: Number(id), dto: updateAdopcionDto },
-    );
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdateAdopcionDto,
+  ): Promise<Adopcion> {
+    return this.adoptionService.update(Number(id), dto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return this.client.send({ cmd: 'delete-adoption' }, Number(id));
+  async remove(@Param('id') id: string): Promise<void> {
+    return this.adoptionService.remove(Number(id));
   }
 }
