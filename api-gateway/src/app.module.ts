@@ -8,6 +8,7 @@ import { UsersService } from './user-integration/user.service';
 import { AnimalService } from './animal-integration/animal.service';
 import { AdoptionService } from './adoption-integration/adoption.service';
 import { AppointmentsService } from './appointment-integration/appointment.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -33,6 +34,8 @@ import { AppointmentsService } from './appointment-integration/appointment.servi
         options: { host: 'localhost', port: 3004 },
       },
     ]),
+
+    AuthModule,
   ],
   controllers: [
     UsersController,
