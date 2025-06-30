@@ -32,4 +32,13 @@ export class UsersService {
   async remove(id: number): Promise<void> {
     return firstValueFrom(this.client.send({ cmd: 'delete-user' }, id));
   }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return firstValueFrom(this.client.send({ cmd: 'find-by-email' }, email));
+  }
+
+  async findByUsername(nombre: string): Promise<User | null> {
+    return firstValueFrom(this.client.send({ cmd: 'find-by-username' }, nombre));
+  }
+
 }

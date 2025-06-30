@@ -35,4 +35,15 @@ export class UsersController {
   async remove(@Payload() id: number): Promise<void> {
     return this.usersService.remove(id);
   }
+
+  @MessagePattern({ cmd: 'find-by-email' })
+  async findByEmail(@Payload() email: string): Promise<User | null> {
+    return this.usersService.findByEmail(email);
+  }
+
+  @MessagePattern({ cmd: 'find-by-username' })
+  async findByUsername(@Payload() nombre: string): Promise<User | null> {
+    return this.usersService.findByUsername(nombre);
+  }
+
 }

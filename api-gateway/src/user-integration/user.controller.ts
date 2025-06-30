@@ -7,12 +7,13 @@ import {
   Body,
   Param,
   UseGuards,
+  Query
 } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { CreateUserDto } from '../../../Microservicios/user-service/src/users/dto/createUser.dto';
 import { UpdateUserDto } from '../../../Microservicios/user-service/src/users/dto/updateUser.dto';
 import { User } from '../../../Microservicios/user-service/src/users/users.entity';
-import { JwtAuthGuard } from 'src/auth/auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -45,5 +46,17 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
     return this.usersService.remove(Number(id));
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('by-email')
+  findByEmail(@Query('email') email: string): Promise<User | null> {
+    return this.usersService.findByEmail(email);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('by-username')
+  findByUsername(@Query('nombre') nombre: string): Promise<User | null> {
+    return this.usersService.findByUsername(nombre);
   }
 }

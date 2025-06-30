@@ -12,7 +12,7 @@ import { AppointmentsService } from './appointment.service';
 import { CreateAppointmentDto } from '../../../Microservicios/appointment-service/src/appointment/dto/createAppointment.dto';
 import { UpdateAppointmentDto } from '../../../Microservicios/appointment-service/src/appointment/dto/updateAppointment.dto';
 import { Appointment } from '../../../Microservicios/appointment-service/src/appointment/appointment.entity';
-import { JwtAuthGuard } from 'src/auth/auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/auth.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('appointments')

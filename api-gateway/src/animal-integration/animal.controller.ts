@@ -12,7 +12,7 @@ import { AnimalService } from './animal.service';
 import { CreateAnimalDomesticoDto } from '../../../Microservicios/animal-service/src/animal/dto/createAnimal.dto';
 import { UpdateAnimalDomesticoDto } from '../../../Microservicios/animal-service/src/animal/dto/updateAnimal.dto';
 import { AnimalDomestico } from '../../../Microservicios/animal-service/src/animal/animal.entity';
-import { JwtAuthGuard } from 'src/auth/auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/auth.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('animals')

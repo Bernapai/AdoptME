@@ -22,6 +22,7 @@ Este proyecto está construido en **NestJS** bajo una arquitectura de **microser
 - **JWT** (autenticación basada en tokens)
 - **Docker** (opcional para despliegue)
 - **RabbitMQ / Redis / TCP** (opcional para comunicación entre servicios)
+- **Swagger** (Documentacion)
 
 ## 🎯 Características
 
