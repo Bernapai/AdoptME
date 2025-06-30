@@ -1,4 +1,9 @@
 {
+  "private": true,
+  "workspaces": [
+    "api-gateway",
+    "Microservicios/*"
+  ],
   "devDependencies": {
     "@nestjs/microservices": "^11.0.20",
     "@types/bcrypt": "^5.0.2",

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AdoptionController } from './adoption.controller';
 import { AdoptionService } from './adoption.service';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
     imports: [
@@ -12,6 +13,7 @@ import { AdoptionService } from './adoption.service';
                 options: { host: 'localhost', port: 3001 },
             },
         ]),
+        AuthModule,
     ],
     controllers: [AdoptionController],
     providers: [AdoptionService],
