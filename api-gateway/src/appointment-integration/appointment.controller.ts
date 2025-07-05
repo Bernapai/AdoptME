@@ -12,7 +12,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AppointmentsService } from './appointment.service';
 import { CreateAppointmentDto } from '../../../Microservicios/appointment-service/src/appointment/dto/createAppointment.dto';
 import { UpdateAppointmentDto } from '../../../Microservicios/appointment-service/src/appointment/dto/updateAppointment.dto';
-import { Appointment } from '../../../Microservicios/appointment-service/src/appointment/appointment.entity';
+import { Appointment } from '../../../Microservicios/appointment-service/src/appointment/entities/appointment.entity';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 
 @ApiTags('Appointments')

@@ -13,7 +13,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { UsersService } from './user.service';
 import { CreateUserDto } from '../../../Microservicios/user-service/src/users/dto/createUser.dto';
 import { UpdateUserDto } from '../../../Microservicios/user-service/src/users/dto/updateUser.dto';
-import { User } from '../../../Microservicios/user-service/src/users/users.entity';
+import { User } from '../../../Microservicios/user-service/src/users/entities/users.entity';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 
 @ApiTags('Users')

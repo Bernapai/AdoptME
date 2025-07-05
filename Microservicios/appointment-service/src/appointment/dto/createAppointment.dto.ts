@@ -5,7 +5,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { EstadoCita } from '../appointment.entity';
+import { EstadoCita } from '../entities/appointment.entity';
 
 export class CreateAppointmentDto {
   @IsDateString()

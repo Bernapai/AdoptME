@@ -12,7 +12,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AdoptionService } from './adoption.service';
 import { CreateAdopcionDto } from '../../../Microservicios/adoption-service/src/adoption/dto/createAdoption.dto';
 import { UpdateAdopcionDto } from '../../../Microservicios/adoption-service/src/adoption/dto/updateAdoption.dto';
-import { Adopcion } from '../../../Microservicios/adoption-service/src/adoption/adoption.entity';
+import { Adopcion } from '../../../Microservicios/adoption-service/src/adoption/entities/adoption.entity';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 
 @ApiTags('Adoptions')

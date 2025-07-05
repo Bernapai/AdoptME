@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { CreateAnimalDomesticoDto } from '../../../Microservicios/animal-service/src/animal/dto/createAnimal.dto';
 import { UpdateAnimalDomesticoDto } from '../../../Microservicios/animal-service/src/animal/dto/updateAnimal.dto';
 import { lastValueFrom } from 'rxjs';
-import { AnimalDomestico } from '../../../Microservicios/animal-service/src/animal/animal.entity';
+import { AnimalDomestico } from '../../../Microservicios/animal-service/src/animal/entities/animal.entity';
 
 @Injectable()
 export class AnimalService {

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AdoptionController } from './adoption.controller';
+import { AdoptionController } from './controllers/adoption.controller';
 import { AdoptionService } from './adoption.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Adopcion } from './adoption.entity';
+import { Adopcion } from './entities/adoption.entity';
 
 @Module({
   imports: [

@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateUserDto } from '../../../Microservicios/user-service/src/users/dto/createUser.dto';
 import { UpdateUserDto } from '../../../Microservicios/user-service/src/users/dto/updateUser.dto';
-import { User } from '../../../Microservicios/user-service/src/users/users.entity';
+import { User } from '../../../Microservicios/user-service/src/users/entities/users.entity';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable()

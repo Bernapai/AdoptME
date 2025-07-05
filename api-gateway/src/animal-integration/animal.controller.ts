@@ -12,7 +12,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AnimalService } from './animal.service';
 import { CreateAnimalDomesticoDto } from '../../../Microservicios/animal-service/src/animal/dto/createAnimal.dto';
 import { UpdateAnimalDomesticoDto } from '../../../Microservicios/animal-service/src/animal/dto/updateAnimal.dto';
-import { AnimalDomestico } from '../../../Microservicios/animal-service/src/animal/animal.entity';
+import { AnimalDomestico } from '../../../Microservicios/animal-service/src/animal/entities/animal.entity';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 
 @ApiTags('Animals')

@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { CreateAdopcionDto } from '../../../Microservicios/adoption-service/src/adoption/dto/createAdoption.dto';
 import { UpdateAdopcionDto } from '../../../Microservicios/adoption-service/src/adoption/dto/updateAdoption.dto';
 import { firstValueFrom } from 'rxjs';
-import { Adopcion } from '../../../Microservicios/adoption-service/src/adoption/adoption.entity';
+import { Adopcion } from '../../../Microservicios/adoption-service/src/adoption/entities/adoption.entity';
 
 @Injectable()
 export class AdoptionService {

@@ -5,7 +5,7 @@ import {
   IsDateString,
   IsOptional,
 } from 'class-validator';
-import { EspecieMascota, EstadoSalud } from '../animal.entity';
+import { EspecieMascota, EstadoSalud } from '../entities/animal.entity';
 
 export class CreateAnimalDomesticoDto {
   @IsString()

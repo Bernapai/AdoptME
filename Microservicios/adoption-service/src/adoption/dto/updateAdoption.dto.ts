@@ -1,5 +1,5 @@
 import { IsDate, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
-import { EstadoAdopcion } from '../adoption.entity';
+import { EstadoAdopcion } from '../entities/adoption.entity';
 import { Type } from 'class-transformer';
 
 export class UpdateAdopcionDto {

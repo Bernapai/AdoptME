@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AnimalController } from './animal.controller';
+import { AnimalController } from './controllers/animal.controller';
 import { AnimalService } from './animal.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AnimalDomestico } from './animal.entity';
+import { AnimalDomestico } from './entities/animal.entity';
 
 @Module({
   imports: [
