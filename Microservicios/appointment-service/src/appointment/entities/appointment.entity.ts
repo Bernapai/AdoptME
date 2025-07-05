@@ -10,7 +10,7 @@ export enum EstadoCita {
 @Entity()
 export class Appointment {
   @PrimaryGeneratedColumn('uuid')
-  idCita: string;
+  idCita: number;
 
   @Column({ type: 'timestamp' })
   fechaHora: Date;
