@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './users.entity';
-import { CreateUserDto } from './dto/createUser.dto';
-import { UpdateUserDto } from './dto/updateUser.dto';
+import { User } from '../entities/users.entity';
+import { CreateUserDto } from '../dto/createUser.dto';
+import { UpdateUserDto } from '../dto/updateUser.dto';
 @Injectable()
 export class UsersService {
   constructor(
@@ -22,7 +22,7 @@ export class UsersService {
 
   async findOne(id: number): Promise<User> {
     const user = await this.userRepository.findOneBy({
-      idUser: id.toString(),
+      idUser: id,
     });
     if (!user) {
       throw new Error(`User with id ${id} not found`);
