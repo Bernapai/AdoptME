@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { AppointmentService } from '../appointment.service';
+import { AppointmentService } from '../services/appointment.service';
 import { CreateAppointmentDto } from '../dto/createAppointment.dto';
 import { UpdateAppointmentDto } from '../dto/updateAppointment.dto';
 import { Appointment } from '../entities/appointment.entity';

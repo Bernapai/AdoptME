@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Adopcion } from './adoption.entity';
-import { CreateAdopcionDto } from './dto/createAdoption.dto';
-import { UpdateAdopcionDto } from './dto/updateAdoption.dto';
+import { Adopcion } from '../entities/adoption.entity';
+import { CreateAdopcionDto } from '../dto/createAdoption.dto';
+import { UpdateAdopcionDto } from '../dto/updateAdoption.dto';
 @Injectable()
 export class AdoptionService {
   constructor(
@@ -22,7 +22,7 @@ export class AdoptionService {
 
   async findOne(id: number): Promise<Adopcion> {
     const adopcion = await this.adopcionRepository.findOneBy({
-      idAdopcion: id.toString(),
+      idAdopcion: id,
     });
     if (!adopcion) {
       throw new Error(`Adopcion with id ${id} not found`);

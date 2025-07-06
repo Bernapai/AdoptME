@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { AnimalService } from '../animal.service';
+import { AnimalService } from '../services/animal.service';
 import { CreateAnimalDomesticoDto } from '../dto/createAnimal.dto';
 import { UpdateAnimalDomesticoDto } from '../dto/updateAnimal.dto';
 import { AnimalDomestico } from '../entities/animal.entity';

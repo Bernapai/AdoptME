@@ -10,7 +10,7 @@ export enum EstadoAdopcion {
 @Entity()
 export class Adopcion {
   @PrimaryGeneratedColumn('uuid')
-  idAdopcion: string;
+  idAdopcion: number;
 
   @Column({ type: 'timestamp' })
   fechaAdopcion: Date;

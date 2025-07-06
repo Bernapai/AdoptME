@@ -17,7 +17,7 @@ export enum EstadoSalud {
 @Entity()
 export class AnimalDomestico {
   @PrimaryGeneratedColumn('uuid')
-  idMascota: string;
+  idMascota: number;
 
   @Column()
   nombre: string;

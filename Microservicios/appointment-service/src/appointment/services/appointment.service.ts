@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Appointment } from './appointment.entity';
-import { CreateAppointmentDto } from './dto/createAppointment.dto';
-import { UpdateAppointmentDto } from './dto/updateAppointment.dto';
+import { Appointment } from '../entities/appointment.entity';
+import { CreateAppointmentDto } from '../dto/createAppointment.dto';
+import { UpdateAppointmentDto } from '../dto/updateAppointment.dto';
 
 @Injectable()
 export class AppointmentService {
@@ -25,7 +25,7 @@ export class AppointmentService {
 
   async findOne(id: number): Promise<Appointment> {
     const appointment = await this.appointmentRepository.findOneBy({
-      idCita: id.toString(),
+      idCita: id,
     });
     if (!appointment) {
       throw new Error(`Appointment with id ${id} not found`);

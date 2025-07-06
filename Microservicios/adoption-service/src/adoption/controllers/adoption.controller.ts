@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { AdoptionService } from '../adoption.service';
+import { AdoptionService } from '../services/adoption.service';
 import { CreateAdopcionDto } from '../dto/createAdoption.dto';
 import { UpdateAdopcionDto } from '../dto/updateAdoption.dto';
 import { Adopcion } from '../entities/adoption.entity';
