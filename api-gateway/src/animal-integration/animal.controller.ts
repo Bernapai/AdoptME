@@ -14,6 +14,7 @@ import { CreateAnimalDomesticoDto } from '../../../Microservicios/animal-service
 import { UpdateAnimalDomesticoDto } from '../../../Microservicios/animal-service/src/animal/dto/updateAnimal.dto';
 import { AnimalDomestico } from '../../../Microservicios/animal-service/src/animal/entities/animal.entity';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { ShortThrottle, MediumThrottle, LongThrottle } from 'src/config/decorators/custom-throttle.decorator';
 
 @ApiTags('Animals')
 @UseGuards(AuthGuard)
@@ -23,6 +24,8 @@ export class AnimalController {
 
   @ApiOperation({ summary: 'Crear un nuevo animal doméstico' })
   @ApiResponse({ status: 201, description: 'Animal creado correctamente.', type: AnimalDomestico })
+  @ShortThrottle() // 5 creaciones por minuto - Restrictivo para evitar spam
+  @UseGuards(AuthGuard)
   @Post()
   async create(
     @Body() dto: CreateAnimalDomesticoDto,
@@ -32,6 +35,8 @@ export class AnimalController {
 
   @ApiOperation({ summary: 'Obtener todos los animales domésticos' })
   @ApiResponse({ status: 200, description: 'Lista de animales domésticos.', type: [AnimalDomestico] })
+  @MediumThrottle() // 500 requests por 5 minutos - Moderado para consultas masivas
+  @UseGuards(AuthGuard)
   @Get()
   async findAll(): Promise<AnimalDomestico[]> {
     return this.animalService.findAll();
@@ -39,6 +44,8 @@ export class AnimalController {
 
   @ApiOperation({ summary: 'Obtener animal doméstico por ID' })
   @ApiResponse({ status: 200, description: 'Animal encontrado.', type: AnimalDomestico })
+  @ShortThrottle() // 100 requests por minuto - Permisivo para consultas individuales
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<AnimalDomestico> {
     return this.animalService.findOne(Number(id));
@@ -46,6 +53,8 @@ export class AnimalController {
 
   @ApiOperation({ summary: 'Actualizar animal doméstico por ID' })
   @ApiResponse({ status: 200, description: 'Animal actualizado correctamente.', type: AnimalDomestico })
+  @MediumThrottle() // 10 actualizaciones por minuto - Restrictivo
+  @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -56,6 +65,8 @@ export class AnimalController {
 
   @ApiOperation({ summary: 'Eliminar animal doméstico por ID' })
   @ApiResponse({ status: 200, description: 'Animal eliminado correctamente.' })
+  @LongThrottle() // 5 eliminaciones por minuto - Moderado para evitar spam
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<void> {
     return this.animalService.remove(Number(id));

@@ -14,28 +14,27 @@ export class AuthService {
   ) { }
 
   // Registro de usuario: crea usuario con password hasheada
-  async register(registerDto: RegisterUserDto): Promise<User> {
-    const { email, nombre, password } = registerDto;
-
-    // Verificar si usuario ya existe por email
+  async register({ nombre, password, email }: RegisterUserDto) {
+    // Verificar si el usuario ya existe
     const existingUser = await this.usersService.findByEmail(email);
     if (existingUser) {
-      throw new ConflictException('Email already registered');
+      throw new ConflictException('User already exists');
     }
 
-    // Hashear password
+    // Hashear la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Crear usuario con password hasheada
-    const userToCreate = {
-      email,
+    // Crear el usuario
+    const user: User = {
       nombre,
+      email,
       password: hashedPassword,
+      idUser: '', // Este campo se llenará al guardar en la base de datos
     };
 
-    const newUser = await this.usersService.create(userToCreate);;
+    // Guardar el usuario en la base de datos a través del UsersService
+    return this.usersService.create(user);
 
-    return newUser;
   }
 
   // Login: valida usuario y devuelve JWT

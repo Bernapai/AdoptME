@@ -14,6 +14,7 @@ import { CreateAppointmentDto } from '../../../Microservicios/appointment-servic
 import { UpdateAppointmentDto } from '../../../Microservicios/appointment-service/src/appointment/dto/updateAppointment.dto';
 import { Appointment } from '../../../Microservicios/appointment-service/src/appointment/entities/appointment.entity';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { ShortThrottle, MediumThrottle, LongThrottle } from 'src/config/decorators/custom-throttle.decorator';
 
 @ApiTags('Appointments')
 @UseGuards(AuthGuard)
@@ -23,6 +24,8 @@ export class AppointmentsController {
 
   @ApiOperation({ summary: 'Crear una nueva cita' })
   @ApiResponse({ status: 201, description: 'Cita creada correctamente.', type: Appointment })
+  @ShortThrottle() // 5 creaciones por minuto - Restrictivo para evitar spam
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() dto: CreateAppointmentDto): Promise<Appointment> {
     return this.appointmentsService.create(dto);
@@ -30,6 +33,8 @@ export class AppointmentsController {
 
   @ApiOperation({ summary: 'Obtener todas las citas' })
   @ApiResponse({ status: 200, description: 'Lista de citas.', type: [Appointment] })
+  @MediumThrottle() // 500 requests por 5 minutos - Moderado para consultas masivas
+  @UseGuards(AuthGuard)
   @Get()
   findAll(): Promise<Appointment[]> {
     return this.appointmentsService.findAll();
@@ -37,6 +42,8 @@ export class AppointmentsController {
 
   @ApiOperation({ summary: 'Obtener cita por ID' })
   @ApiResponse({ status: 200, description: 'Cita encontrada.', type: Appointment })
+  @ShortThrottle() // 100 requests por minuto - Permisivo para consultas individuales
+  @UseGuards(AuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Appointment> {
     return this.appointmentsService.findOne(Number(id));
@@ -44,6 +51,8 @@ export class AppointmentsController {
 
   @ApiOperation({ summary: 'Actualizar cita por ID' })
   @ApiResponse({ status: 200, description: 'Cita actualizada correctamente.', type: Appointment })
+  @MediumThrottle() // 10 actualizaciones por minuto - Restrictivo
+  @UseGuards(AuthGuard)
   @Put(':id')
   update(
     @Param('id') id: string,
@@ -54,6 +63,8 @@ export class AppointmentsController {
 
   @ApiOperation({ summary: 'Eliminar cita por ID' })
   @ApiResponse({ status: 200, description: 'Cita eliminada correctamente.' })
+  @LongThrottle() // 5 eliminaciones por minuto - Moderado para evitar spam
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
     return this.appointmentsService.remove(Number(id));

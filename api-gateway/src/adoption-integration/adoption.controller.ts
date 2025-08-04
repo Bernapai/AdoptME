@@ -14,6 +14,8 @@ import { CreateAdopcionDto } from '../../../Microservicios/adoption-service/src/
 import { UpdateAdopcionDto } from '../../../Microservicios/adoption-service/src/adoption/dto/updateAdoption.dto';
 import { Adopcion } from '../../../Microservicios/adoption-service/src/adoption/entities/adoption.entity';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { ShortThrottle, MediumThrottle, LongThrottle } from 'src/config/decorators/custom-throttle.decorator';
+
 
 @ApiTags('Adoptions')
 @UseGuards(AuthGuard)
@@ -23,6 +25,8 @@ export class AdoptionController {
 
   @ApiOperation({ summary: 'Crear una nueva adopción' })
   @ApiResponse({ status: 201, description: 'Adopción creada correctamente.', type: Adopcion })
+  @ShortThrottle() // 5 creaciones por minuto - Restrictivo para evitar spam
+  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() dto: CreateAdopcionDto): Promise<Adopcion> {
     return this.adoptionService.create(dto);
@@ -30,6 +34,8 @@ export class AdoptionController {
 
   @ApiOperation({ summary: 'Obtener todas las adopciones' })
   @ApiResponse({ status: 200, description: 'Lista de adopciones.', type: [Adopcion] })
+  @MediumThrottle() // 500 requests por 5 minutos - Moderado para consultas masivas
+  @UseGuards(AuthGuard)
   @Get()
   async findAll(): Promise<Adopcion[]> {
     return this.adoptionService.findAll();
@@ -37,6 +43,8 @@ export class AdoptionController {
 
   @ApiOperation({ summary: 'Obtener adopción por ID' })
   @ApiResponse({ status: 200, description: 'Adopción encontrada.', type: Adopcion })
+  @ShortThrottle() // 100 requests por minuto - Permisivo para consultas individuales
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Adopcion> {
     return this.adoptionService.findOne(Number(id));
@@ -44,6 +52,8 @@ export class AdoptionController {
 
   @ApiOperation({ summary: 'Actualizar adopción por ID' })
   @ApiResponse({ status: 200, description: 'Adopción actualizada correctamente.', type: Adopcion })
+  @MediumThrottle() // 10 actualizaciones por minuto - Restrictivo
+  @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -54,6 +64,8 @@ export class AdoptionController {
 
   @ApiOperation({ summary: 'Eliminar adopción por ID' })
   @ApiResponse({ status: 200, description: 'Adopción eliminada correctamente.' })
+  @LongThrottle() // 5 eliminaciones por minuto - Moderado para evitar spam
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<void> {
     return this.adoptionService.remove(Number(id));
